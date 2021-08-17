@@ -1,12 +1,11 @@
 package com.hxsearch.arcsearch.controller;
 
-import com.hxsearch.arcsearch.mapper.CityMapper;
+import com.hxsearch.arcsearch.request.QueryParameter;
+import com.hxsearch.arcsearch.request.SpatialRel;
 import com.hxsearch.arcsearch.respose.ApiResult;
-import com.hxsearch.arcsearch.service.GetGisData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,8 +40,12 @@ public class SpatialSearchController {
                             @RequestParam(value = "spatialRel", required = false) String spatialRel,
                             @RequestParam(value = "current", required = false, defaultValue = "1") Integer current,
                             @RequestParam(value = "limit", required = false, defaultValue = "-1") Integer limit){
-        System.out.println(spatialFilter);
-        ApiResult apiData=new ApiResult();
+            ApiResult apiData=new ApiResult();
+            SpatialRel spRel=null;
+            if(!spatialRel.isEmpty()){
+                 spRel= SpatialRel.fromName(spatialRel);
+            }
+        QueryParameter queryParameter=new QueryParameter(layerName,filter,spatialFilter,outFields,isReturnGeometry,orderByFields,spRel,current,limit);
         return null;
     }
 }

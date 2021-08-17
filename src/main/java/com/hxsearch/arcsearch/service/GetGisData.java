@@ -1,6 +1,5 @@
 package com.hxsearch.arcsearch.service;
 
-import com.hxsearch.arcsearch.mapper.CityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
