@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hxsearch.arcsearch.mapper.CityMapper">
+<mapper namespace="com.hxsearch.arcsearch.mapper.ArcMapper">
+    <select id="search" parameterType="com.hxsearch.arcsearch.request.QueryParameter" resultType="java.util.Map">
+      select
+        <if test="outFields!=null and outFields!='' ">
+           ${outFields},
+      </if>
+      <if test="isReturnGeometry==true">
+          st_astext(shape)
+      </if>
+      from ${layerName} where 1=1
+      <if test="filter!=null and filter!=''">
+          and ${filter}
+      </if>
+      <if test="spatialRel.type=='1'  and spatialFilter!='' and spatialFilter!=null">
+          and st_intersects('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="spatialRel.type=='2'  and spatialFilter!='' and spatialFilter!=null">
+          and  st_disjoint(st_geomfromtext('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="spatialRel.type=='6' and spatialFilter!='' and spatialFilter!=null">
+          and st_contains(st_geomfromtext('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="spatialRel.type=='3'  and spatialFilter!='' and spatialFilter!=null">
+          and st_touches(st_geomfromtext('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="spatialRel.type=='4'  and spatialFilter!='' and spatialFilter!=null">
+          and st_crosses(st_geomfromtext('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="spatialRel.type=='5'  and spatialFilter!='' and spatialFilter!=null">
+          and st_within(st_geomfromtext('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="spatialRel.type=='7'  and spatialFilter!='' and spatialFilter!=null">
+          and  st_overlaps(st_geomfromtext('${spatialFilter}',4326),shape)=1
+      </if>
+      <if test="orderByFields!=null and orderByFields!=''">
+          order by orderByFields
+      </if>
+      <if test="current!=null and current!='' and limit !=null and limit!=-1">
+          limit ${current},${limit}
+      </if>
+ </select>
 </mapper>

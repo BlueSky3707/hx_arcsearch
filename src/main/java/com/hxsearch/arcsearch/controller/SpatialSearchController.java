@@ -1,15 +1,21 @@
 package com.hxsearch.arcsearch.controller;
 
+import com.hxsearch.arcsearch.exception.ExceptionMsg;
 import com.hxsearch.arcsearch.request.QueryParameter;
 import com.hxsearch.arcsearch.request.SpatialRel;
 import com.hxsearch.arcsearch.respose.ApiResult;
+import com.hxsearch.arcsearch.service.SpatialQueryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.rmi.RemoteException;
 
 /**
  * 功能描述：
@@ -21,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("rest")
 @Api(tags ="空间数据查询REST实现")
 public class SpatialSearchController {
+    @Resource
+    SpatialQueryService spatialQueryService;
     @RequestMapping(value = "api/search", method = RequestMethod.GET, produces = "application/json")
     @ApiImplicitParams({@ApiImplicitParam(paramType = "query", name = "layerName", required = true, dataType = "String", value = "空间数据库中的图层名称"),
             @ApiImplicitParam(paramType = "query", name = "filter", required = false, dataType = "String", value = "属性过滤条件，语法请参考SQL，例如：LXBM='G45' AND SXXFX=1"),
@@ -39,13 +47,15 @@ public class SpatialSearchController {
                             @RequestParam(value = "orderByFields", required = false) String orderByFields,
                             @RequestParam(value = "spatialRel", required = false) String spatialRel,
                             @RequestParam(value = "current", required = false, defaultValue = "1") Integer current,
-                            @RequestParam(value = "limit", required = false, defaultValue = "-1") Integer limit){
+                            @RequestParam(value = "limit", required = false, defaultValue = "-1") Integer limit) throws RemoteException, ExceptionMsg {
             ApiResult apiData=new ApiResult();
             SpatialRel spRel=null;
             if(!spatialRel.isEmpty()){
                  spRel= SpatialRel.fromName(spatialRel);
             }
+
         QueryParameter queryParameter=new QueryParameter(layerName,filter,spatialFilter,outFields,isReturnGeometry,orderByFields,spRel,current,limit);
-        return null;
+        spatialQueryService.search(queryParameter);
+            return null;
     }
 }

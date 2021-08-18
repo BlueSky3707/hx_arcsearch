@@ -4,9 +4,14 @@ import com.hxsearch.arcsearch.exception.ExceptionMsg;
 import com.hxsearch.arcsearch.request.QueryParameter;
 import com.hxsearch.arcsearch.respose.Features;
 import com.hxsearch.arcsearch.service.SpatialQueryService;
+import com.hxsearch.arcsearch.st_geometry.ArcSearch;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 功能描述：
@@ -16,8 +21,11 @@ import java.rmi.RemoteException;
  */
 @Service
 public class SpatialQueryServiceImpl implements SpatialQueryService {
+    @Autowired
+    private ArcSearch arcSearch;
     @Override
     public Features search(QueryParameter queryParameter) throws RemoteException, ExceptionMsg {
-        return null;
+        Features features= arcSearch.search(queryParameter);
+        return features;
     }
 }
