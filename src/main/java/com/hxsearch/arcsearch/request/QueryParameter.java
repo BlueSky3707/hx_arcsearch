@@ -37,7 +37,8 @@ public class QueryParameter extends ValidParameter {
     /**
      * 空间位置关系
      */
-    SpatialRel spatialRel = SpatialRel.INTERSECTS;
+    //SpatialRel spatialRel = SpatialRel.INTERSECTS;
+    protected String spatialRel;
     /**
      * 缓冲距离
      */
@@ -46,16 +47,16 @@ public class QueryParameter extends ValidParameter {
     /**
      * 分页信息
      */
-    protected Integer current;
+    protected Integer current=1;
 
-    protected Integer limit;
+    protected Integer limit=1000;
 
     @Override
     public boolean check() throws ExceptionMsg {
         ValidParameter.isBlank(this.layerName, "'layerName'参数不能为空!");
         return false;
     }
-    public QueryParameter(String layerName, String filter, String spatialFilter, String outFields, Boolean isReturnGeometry, String orderByFields,  SpatialRel spatialRel, Integer current, Integer limit){
+    public QueryParameter(String layerName, String filter, String spatialFilter, String outFields, Boolean isReturnGeometry, String orderByFields,  String spatialRel, Integer current, Integer limit){
      this.layerName=layerName;
      this.filter=filter;
      this.spatialFilter=spatialFilter;
@@ -115,12 +116,21 @@ public class QueryParameter extends ValidParameter {
         this.orderByFields = orderByFields;
     }
 
-    public SpatialRel getSpatialRel() {
-        return spatialRel;
+//    public SpatialRel getSpatialRel() {
+//        return spatialRel;
+//    }
+//
+//    public void setSpatialRel(SpatialRel spatialRel) {
+//        this.spatialRel = spatialRel;
+//    }
+
+
+    public void setSpatialRel(String spatialRel) {
+        this.spatialRel = spatialRel;
     }
 
-    public void setSpatialRel(SpatialRel spatialRel) {
-        this.spatialRel = spatialRel;
+    public String getSpatialRel() {
+        return spatialRel;
     }
 
     public Integer getCurrent() {

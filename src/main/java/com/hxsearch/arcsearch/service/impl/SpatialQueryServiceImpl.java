@@ -28,4 +28,13 @@ public class SpatialQueryServiceImpl implements SpatialQueryService {
         Features features= arcSearch.search(queryParameter);
         return features;
     }
+
+    @Override
+    public Features getFeaturesByCityCode(QueryParameter queryParameter, String cityCode,String cityTable) {
+        Features features=arcSearch.getFeaturesByCityCode(queryParameter,cityCode,cityTable);
+        return features;
+    }
+
+
+
 }

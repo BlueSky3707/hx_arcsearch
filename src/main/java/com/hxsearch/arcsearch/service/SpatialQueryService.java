@@ -14,4 +14,5 @@ import java.rmi.RemoteException;
  */
 public interface SpatialQueryService {
     Features search(QueryParameter queryParameter) throws RemoteException, ExceptionMsg;
+    Features getFeaturesByCityCode(QueryParameter queryParameter,String cityCode,String cityTable);
 }

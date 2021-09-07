@@ -39,7 +39,7 @@ public class Features implements Serializable {
     /**
      * 几何体类型
      */
-    private String geometryType = null;
+    private String geometryType = "";
     public void setGeometryType(String geometryType) {
         this.geometryType = geometryType;
     }

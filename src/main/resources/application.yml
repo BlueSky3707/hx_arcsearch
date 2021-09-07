@@ -8,3 +8,6 @@ spring:
     username: sde
     password: sde$123qaz
     driver-class-name: oracle.jdbc.OracleDriver
+logging:
+  level:
+    com.hxsearch.arcsearch.mapper: debug

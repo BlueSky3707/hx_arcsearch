@@ -15,8 +15,6 @@ import java.util.Map;
 public class CallbackAbleFeature implements Serializable {
     //记录一个要素的属性
     private Map<String, Object> attributes = new LinkedHashMap<String, Object>();
-    //几何体
-    private Geometry geometry = null;
     //wkt
     public String geowkt = "";
     //获取所有属性
@@ -27,14 +25,7 @@ public class CallbackAbleFeature implements Serializable {
     public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
     }
-    //设置几何体
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
-    //获取几何体
-    public Geometry getGeometry() {
-        return geometry;
-    }
+
     //设置单个属性
     public void setAttribute(String name, Object value) {
         this.attributes.put(name, value);
@@ -50,5 +41,13 @@ public class CallbackAbleFeature implements Serializable {
     //获取double类型的数据
     public double getDoubleAttribute(String name) {
         return Double.valueOf(this.getStringAttribute(name));
+    }
+
+    public void setGeowkt(String geowkt) {
+        this.geowkt = geowkt;
+    }
+
+    public String getGeowkt() {
+        return geowkt;
     }
 }
